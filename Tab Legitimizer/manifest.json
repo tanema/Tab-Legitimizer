@@ -1,0 +1,21 @@
+{
+  "name": "Tab Legitimizer",
+  "version": "1.0",
+  "description": "Renames tabs to more legitimate titles and icons than ones that you are trying to hide!",
+  "background_page": "background.html",
+  "browser_action" :
+  {
+    "default_icon" : "images/icon-19.png",
+    "default_title" : "I am doing work!",
+    "default_popup": "popup.html"
+  },
+  "permissions" : [
+    "tabs", 
+		"http://*/*", 
+		"https://*/*"
+  ],
+  "icons" : {
+    "48" : "images/icon-48.png",
+    "128" : "images/icon-128.png"
+  }
+}

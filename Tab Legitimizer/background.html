@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2010 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+<html>
+  <head>
+    <script>
+			var hiddentabs = {},
+					reputableWebsiteSelected = 0,
+					reputableWebsites = [
+						{icon: 'http://www.google.ca/favicon.ico' ,title: 'Google'},
+						{icon: 'http://en.wikipedia.org/favicon.ico' ,title: 'Wikipedia'},
+						{icon: 'http://www.cbc.ca/favicon.ico' ,title: 'CBC.ca'},
+						{icon: 'http://www.cnn.com/favicon.ico' ,title: 'CNN.com'}
+					]
+			chrome.tabs.onUpdated.addListener(
+				function(tabId, changeInfo, tab) {
+					if(changeInfo.status == "complete" && hiddentabs[tabId] != undefined && currentTab == tabId){
+						chrome.tabs.executeScript(tabId, { code: "(function(){var link=document.createElement('link');link.type='image/x-icon';link.rel='shortcut icon';link.href='" + reputableWebsites[hiddentabs[tabId]].icon + "';document.getElementsByTagName('head')[0].appendChild(link);document.title='"+reputableWebsites[hiddentabs[tabId]].title+"';})()" });
+					}
+				}
+			);
+			
+			chrome.tabs.getSelected(null, function(tab){
+				currentTab = tab.id;
+			});
+		 
+			chrome.tabs.onSelectionChanged.addListener(function(tabId, selectInfo){
+				currentTab = tabId;
+			});
+			
+			chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
+				delete hiddentabs[tabId];
+			});
+			
+			function addCurrentTab(){
+				hiddentabs[currentTab] = reputableWebsiteSelected;
+				chrome.tabs.executeScript(currentTab, { code: "(function(){var link=document.createElement('link');link.type='image/x-icon';link.rel='shortcut icon';link.href='" + reputableWebsites[reputableWebsiteSelected].icon + "';document.getElementsByTagName('head')[0].appendChild(link);document.title='"+reputableWebsites[reputableWebsiteSelected].title+"';})()" });
+			}
+			
+			function selectWebsite(id){
+				reputableWebsiteSelected = id;
+			}
+    </script>
+  </head>
+</html>

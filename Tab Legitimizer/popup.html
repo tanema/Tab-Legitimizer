@@ -1,0 +1,84 @@
+<html>
+	<head>
+		<style>
+		body {
+			overflow: hidden;
+			margin: 0px;
+			padding: 10px;
+			background: white;
+		}
+		div, p{
+			cursor: pointer;
+			text-align: center;
+			padding: 1px 3px;
+			font-family: bold, 'GentiumBasicRegular', Tahoma, Geneva, sans-serif;
+			font-size: 0.8em;
+			width: 100px;
+			margin-top: 1px;
+			text-shadow: 1px 1px 2px #;
+			filter: dropshadow(color=#, offx=1, offy=1);
+		}
+		p {
+			padding: o;
+			margin: 0;
+		}
+		option.imagebacked {
+			padding: 2px 0 2px 20px;
+			background-repeat: no-repeat;
+			background-position: 1px 2px;
+			vertical-align: middle;
+		}
+		div:first-child {margin-top: 0px;}
+		.button{
+			color: white;
+			background: #A30000;
+			-moz-border-radius: 30px;
+			border-radius: 30px;
+			-webkit-box-shadow: 2px 2px 3px #000000;
+			-moz-box-shadow: 2px 2px 3px #000000;
+			box-shadow: 2px 2px 3px #000000;
+		}
+		.button:hover { background: #E00000;}
+		.button:active{
+			background: #660000;
+			-webkit-box-shadow: inset 2px 2px 3px #000000;
+			-moz-box-shadow: inset 2px 2px 3px #000000;
+			box-shadow: inset 2px 2px 3px #000000;
+		}
+		.small{font-size:10px; line-height:12px; font-weight:normal; font-family:Arial, Helvetica, sans-serif; position:relative; top:50px}
+		</style>
+
+		<script>
+			var background = chrome.extension.getBackgroundPage();
+			function addThisTab(){
+				background.addCurrentTab();
+				window.close();
+			}
+			function changeSiteSelection(id){
+				background.selectWebsite(id);
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="msdropdown/dd.css" /> 
+		<script type="text/javascript" src="msdropdown/js/jquery-1.3.2.min.js"></script> 
+		<script type="text/javascript" src="msdropdown/js/jquery.dd.js"></script> 
+	</head>
+	<body>
+		<p>Legitimate Site:</p>
+		<select name="siteSelect" id="siteSelect" onchange="changeSiteSelection(this.selectedIndex)">  
+			<option value="1" title="images/google.gif">Google</option>  
+			<option value="2" title="images/wiki.gif">Wikipedia</option>  
+			<option value="3" title="images/cbc.gif">CBC</option>  
+			<option value="4" title="images/cnn.gif">CNN</option>
+		</select><br>
+		<br>
+		<div onclick="addThisTab()" class="button">Hide This Tab!</div>
+		<footer class="small">
+		© 2011 Tim Anema
+		</footer>
+	</body>
+	<script type="text/javascript"> 
+		$(function(){
+			$("select#siteSelect").msDropDown();
+		});
+	</script>
+</html>
